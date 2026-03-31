@@ -55,7 +55,7 @@ function CompareAnalytics({ data, isDark }) {
       datasets: [{
         label: "Total kWh",
         data: [+totA.toFixed(1), +totB.toFixed(1)],
-        backgroundColor: ["rgba(56,189,248,0.6)", "rgba(167,139,250,0.6)"],
+        backgroundColor: ["rgba(16,185,129,0.6)", "rgba(167,139,250,0.6)"],
         borderRadius: 10, borderSkipped: false,
       }],
     };
@@ -111,9 +111,9 @@ function CompareAnalytics({ data, isDark }) {
             style={{
               padding: "8px 18px", borderRadius: "10px", cursor: "pointer",
               fontFamily: "Inter, sans-serif", fontSize: "13px", fontWeight: "600",
-              border: tab === t2.id ? "1px solid rgba(56,189,248,0.3)" : `1px solid ${t.border}`,
-              background: tab === t2.id ? "rgba(56,189,248,0.1)" : "transparent",
-              color: tab === t2.id ? "#38bdf8" : t.sub,
+              border: tab === t2.id ? "1px solid rgba(16,185,129,0.3)" : `1px solid ${t.border}`,
+              background: tab === t2.id ? "rgba(16,185,129,0.1)" : "transparent",
+              color: tab === t2.id ? "#10b981" : t.sub,
               transition: "all 0.15s",
             }}
           >{t2.label}</button>
@@ -123,7 +123,7 @@ function CompareAnalytics({ data, isDark }) {
       {/* Dept selector */}
       {tab === "dept" && (
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-          {[{val: bldA, set: setBldA, label: "Building A", color: "#38bdf8"},
+          {[{val: bldA, set: setBldA, label: "Building A", color: "#10b981"},
             {val: bldB, set: setBldB, label: "Building B", color: "#a78bfa"}].map(({val,set,label,color}) => (
             <div key={label} style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: "14px", padding: "16px" }}>
               <label style={{ fontSize: "11px", fontWeight: "700", color: t.sub, textTransform: "uppercase", letterSpacing: "0.5px", display: "block", marginBottom: "8px" }}>{label}</label>

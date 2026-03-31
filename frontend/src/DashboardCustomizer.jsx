@@ -59,13 +59,13 @@ function DashboardCustomizer({ isDark, onNavigate }) {
     border: isDark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.08)",
     text: isDark ? "#f1f5f9" : "#1e293b",
     sub: isDark ? "#64748b" : "#94a3b8",
-    activeBg: isDark ? "rgba(56,189,248,0.1)" : "rgba(56,189,248,0.08)",
-    activeBorder: "rgba(56,189,248,0.3)",
+    activeBg: isDark ? "rgba(16,185,129,0.1)" : "rgba(16,185,129,0.08)",
+    activeBorder: "rgba(16,185,129,0.3)",
   };
 
-  const pillStyle = (active, hue = "blue") => {
+  const pillStyle = (active, hue = "green") => {
     const colors = {
-      blue: { bg: "rgba(56,189,248,0.1)", border: "rgba(56,189,248,0.35)", text: "#38bdf8" },
+      green:  { bg: "rgba(16,185,129,0.1)", border: "rgba(16,185,129,0.35)", text: "#10b981" },
       purple: { bg: "rgba(167,139,250,0.1)", border: "rgba(167,139,250,0.35)", text: "#a78bfa" },
     };
     const c = colors[hue];
@@ -93,9 +93,9 @@ function DashboardCustomizer({ isDark, onNavigate }) {
               style={{
                 padding: "10px 20px", borderRadius: "10px", cursor: "pointer",
                 fontFamily: "Inter, sans-serif", fontSize: "13px", fontWeight: "600",
-                border: layout === opt ? "1px solid rgba(56,189,248,0.35)" : `1px solid ${t.border}`,
-                background: layout === opt ? "rgba(56,189,248,0.1)" : "transparent",
-                color: layout === opt ? "#38bdf8" : t.sub,
+                border: layout === opt ? "1px solid rgba(16,185,129,0.35)" : `1px solid ${t.border}`,
+                background: layout === opt ? "rgba(16,185,129,0.1)" : "transparent",
+                color: layout === opt ? "#10b981" : t.sub,
                 textTransform: "capitalize", transition: "all 0.15s",
               }}
             >{opt === "comfortable" ? "🖥️ Comfortable" : opt === "compact" ? "⚡ Compact" : "⊞ Grid"}</button>
@@ -150,7 +150,7 @@ function DashboardCustomizer({ isDark, onNavigate }) {
                     <input type="checkbox" checked={isVisible} onChange={() => toggleVisible(w.id)} style={{ opacity: 0, width: 0, height: 0 }} />
                     <span style={{
                       position: "absolute", inset: 0, borderRadius: "20px", transition: "0.3s",
-                      background: isVisible ? "#38bdf8" : (isDark ? "rgba(255,255,255,0.1)" : "#cbd5e1"),
+                      background: isVisible ? "#10b981" : (isDark ? "rgba(255,255,255,0.1)" : "#cbd5e1"),
                     }}>
                       <span style={{
                         position: "absolute", width: "14px", height: "14px", left: isVisible ? "19px" : "3px", top: "3px",
@@ -167,7 +167,7 @@ function DashboardCustomizer({ isDark, onNavigate }) {
 
       {/* Save / Reset */}
       <div style={{ display: "flex", gap: "12px" }}>
-        <button onClick={save} style={{ flex: 1, padding: "13px", borderRadius: "12px", border: "none", background: saved ? "linear-gradient(135deg,#22c55e,#16a34a)" : "linear-gradient(135deg,#38bdf8,#818cf8)", color: "#fff", fontSize: "14px", fontWeight: "700", cursor: "pointer", fontFamily: "Inter, sans-serif", boxShadow: "0 4px 16px rgba(56,189,248,0.3)", transition: "all 0.2s" }}>
+        <button onClick={save} style={{ flex: 1, padding: "13px", borderRadius: "12px", border: "none", background: saved ? "linear-gradient(135deg,#22c55e,#16a34a)" : "linear-gradient(135deg,#10b981,#047857)", color: "#fff", fontSize: "14px", fontWeight: "700", cursor: "pointer", fontFamily: "Inter, sans-serif", boxShadow: "0 4px 16px rgba(16,185,129,0.3)", transition: "all 0.2s" }}>
           {saved ? "✅ Saved!" : "💾 Save Layout"}
         </button>
         <button onClick={reset} style={{ padding: "13px 24px", borderRadius: "12px", border: `1px solid ${t.border}`, background: "transparent", color: t.sub, fontSize: "14px", fontWeight: "600", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>

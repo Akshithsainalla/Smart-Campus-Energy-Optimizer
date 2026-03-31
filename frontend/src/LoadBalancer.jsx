@@ -138,7 +138,7 @@ function LoadBalancer({ isDark }) {
         {[
           { label: "Highest Load", value: `${Math.max(...loads).toFixed(1)} kW`, color: "#f87171", icon: "🔥" },
           { label: "Lowest Load", value: `${Math.min(...loads).toFixed(1)} kW`, color: "#22c55e", icon: "📉" },
-          { label: "Transfers Done", value: transferLog.length, color: "#38bdf8", icon: "⚖️" },
+          { label: "Transfers Done", value: transferLog.length, color: "#10b981", icon: "⚖️" },
         ].map(s => (
           <div key={s.label} style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: "16px", padding: "16px 20px", display: "flex", alignItems: "center", gap: "14px" }}>
             <span style={{ fontSize: "24px" }}>{s.icon}</span>
@@ -177,7 +177,7 @@ function LoadBalancer({ isDark }) {
           </div>
 
           {/* Arrow divider */}
-          <div style={{ textAlign: "center", fontSize: "24px", color: "#38bdf8", lineHeight: 1 }}>⬇️</div>
+          <div style={{ textAlign: "center", fontSize: "24px", color: "#10b981", lineHeight: 1 }}>⬇️</div>
 
           {/* Target */}
           <div>
@@ -192,7 +192,7 @@ function LoadBalancer({ isDark }) {
             <div style={{ marginTop: "10px", padding: "10px 14px", borderRadius: "10px", background: t.inner, border: `1px solid ${overloadWarn ? "rgba(248,113,113,0.4)" : t.border}` }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
                 <span style={{ fontSize: "12px", color: t.sub }}>Current → After Transfer</span>
-                <span style={{ fontSize: "12px", fontWeight: "700", color: "#38bdf8" }}>
+                <span style={{ fontSize: "12px", fontWeight: "700", color: "#10b981" }}>
                   {loads[target]} kW → <span style={{ color: overloadWarn ? "#f87171" : "#22c55e" }}>{projectedTarget} kW</span>
                 </span>
               </div>
@@ -204,12 +204,12 @@ function LoadBalancer({ isDark }) {
           <div>
             <label style={{ fontSize: "11px", fontWeight: "700", color: t.sub, textTransform: "uppercase", letterSpacing: "0.5px", display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
               <span>Transfer Amount</span>
-              <span style={{ color: "#38bdf8", fontSize: "14px" }}>{amount} kW</span>
+              <span style={{ color: "#10b981", fontSize: "14px" }}>{amount} kW</span>
             </label>
             <input
               type="range" min={1} max={30} value={amount}
               onChange={e => setAmount(+e.target.value)}
-              style={{ width: "100%", accentColor: "#38bdf8", cursor: "pointer" }}
+              style={{ width: "100%", accentColor: "#10b981", cursor: "pointer" }}
             />
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: "10px", color: t.sub, marginTop: "4px" }}>
               <span>1 kW</span><span>15 kW</span><span>30 kW</span>
@@ -301,7 +301,7 @@ function LoadBalancer({ isDark }) {
                         </div>
                         <div style={{ fontSize: "11px", color: t.sub, marginTop: "2px" }}>{entry.time}</div>
                       </div>
-                      <span style={{ fontSize: "12px", fontWeight: "700", color: "#38bdf8", background: "rgba(56,189,248,0.1)", padding: "2px 8px", borderRadius: "6px" }}>
+                      <span style={{ fontSize: "12px", fontWeight: "700", color: "#10b981", background: "rgba(16,185,129,0.1)", padding: "2px 8px", borderRadius: "6px" }}>
                         -{entry.amount} kW
                       </span>
                     </div>

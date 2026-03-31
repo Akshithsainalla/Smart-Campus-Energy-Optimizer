@@ -58,8 +58,8 @@ function LiveMonitor({ isDark }) {
     datasets: [{
       label: "Campus Load (kW)",
       data: history.map(h => +h.v.toFixed(1)),
-      borderColor: "#38bdf8",
-      backgroundColor: "rgba(56,189,248,0.08)",
+      borderColor: "#10b981",
+      backgroundColor: "rgba(16,185,129,0.08)",
       tension: 0.4, fill: true, pointRadius: 0, borderWidth: 2,
     }],
   };
@@ -70,7 +70,7 @@ function LiveMonitor({ isDark }) {
       legend: { labels: { color: t.sub, font: { family: "Inter" } } },
       tooltip: {
         backgroundColor: isDark ? "rgba(15,23,42,0.95)" : "#fff",
-        borderColor: "rgba(56,189,248,0.3)", borderWidth: 1,
+        borderColor: "rgba(16,185,129,0.3)", borderWidth: 1,
         titleColor: t.text, bodyColor: t.sub,
       },
     },
@@ -100,7 +100,7 @@ function LiveMonitor({ isDark }) {
       {/* Stat Cards */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }}>
         {[
-          { label: "Total Campus Load", value: `${totalLoad} kW`, color: "#38bdf8", icon: "⚡" },
+          { label: "Total Campus Load", value: `${totalLoad} kW`, color: "#10b981", icon: "⚡" },
           { label: "Active Buildings", value: "15", color: "#22c55e", icon: "🏛️" },
           { label: "Peak Building", value: BUILDINGS[peakIdx], color: "#fb923c", icon: "🔥" },
         ].map(s => (

@@ -25,10 +25,10 @@ function EnergyChart({ data }) {
       {
         label: "Energy Consumption (kWh)",
         data: data.map((d) => d.consumption),
-        borderColor: "#38bdf8",
-        backgroundColor: "rgba(56,189,248,0.1)",
-        pointBackgroundColor: "#38bdf8",
-        pointBorderColor: "#0a0f1e",
+        borderColor: "#10b981",
+        backgroundColor: "rgba(16,185,129,0.1)",
+        pointBackgroundColor: "#10b981",
+        pointBorderColor: "#022c22",
         pointBorderWidth: 2,
         pointRadius: 5,
         pointHoverRadius: 8,
@@ -53,7 +53,7 @@ function EnergyChart({ data }) {
       },
       tooltip: {
         backgroundColor: "rgba(15,23,42,0.95)",
-        borderColor: "rgba(56,189,248,0.3)",
+        borderColor: "rgba(16,185,129,0.3)",
         borderWidth: 1,
         titleColor: "#f1f5f9",
         bodyColor: "#94a3b8",

@@ -15,6 +15,11 @@ import PowerMonitor from "./PowerMonitor";
 import DashboardCustomizer from "./DashboardCustomizer";
 import LoadBalancer from "./LoadBalancer";
 import FaultDetection from "./FaultDetection";
+import SensorFaultDetection from "./SensorFaultDetection";
+import GreenEnergyMode from "./GreenEnergyMode";
+import EnergyRiskAssessment from "./EnergyRiskAssessment";
+import MultiDimensionalAnalytics from "./MultiDimensionalAnalytics";
+import AcademicCalendar from "./AcademicCalendar";
 
 const BUILDINGS = [
   "Admin Block","Cafeteria","Parking Lot","Boys Hostel","Girls Hostel",
@@ -69,7 +74,13 @@ function Dashboard() {
   const [submitting, setSubmitting] = useState(false);
   const [toast, setToast] = useState(null);
   const [isDark, setIsDark] = useState(() => localStorage.getItem("theme") !== "light");
+  const [currentTime, setCurrentTime] = useState(new Date());
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   // Profile state
@@ -130,17 +141,22 @@ function Dashboard() {
   }, []);
 
   const QUICK_TILES = [
-    { id: "monitor",      icon: "📡", label: "Live Monitor",    color: "#22c55e" },
-    { id: "predict",      icon: "🤖", label: "AI Prediction",   color: "#a78bfa" },
-    { id: "peak",         icon: "⏱️", label: "Peak Usage",      color: "#fb923c" },
-    { id: "scores",       icon: "🏆", label: "Efficiency",      color: "#facc15" },
-    { id: "power",        icon: "⚡", label: "Power Monitor",   color: "#f87171" },
-    { id: "compare",      icon: "📊", label: "Compare",         color: "#38bdf8" },
-    { id: "map",          icon: "🗺️", label: "Campus Map",      color: "#34d399" },
-    { id: "billing",      icon: "💰", label: "Billing",         color: "#facc15" },
-    { id: "heatmap",      icon: "🌡️", label: "Heatmap",         color: "#f87171" },
-    { id: "loadbalancer", icon: "⚖️", label: "Load Balancer",   color: "#22c55e" },
-    { id: "faults",       icon: "🔬", label: "Fault Detection", color: "#a78bfa" },
+    { id: "monitor",       icon: "📡", label: "Live Monitor",       color: "#22c55e" },
+    { id: "predict",       icon: "🤖", label: "AI Prediction",      color: "#a78bfa" },
+    { id: "peak",          icon: "⏱️", label: "Peak Usage",         color: "#fb923c" },
+    { id: "scores",        icon: "🏆", label: "Efficiency",         color: "#facc15" },
+    { id: "power",         icon: "⚡", label: "Power Monitor",      color: "#f87171" },
+    { id: "compare",       icon: "📊", label: "Compare",            color: "#10b981" },
+    { id: "riskassess",    icon: "🛡️", label: "Risk Assessment",   color: "#f87171" },
+    { id: "multidim",      icon: "📐", label: "Multi Analytics",   color: "#a78bfa" },
+    { id: "calendar",      icon: "📅", label: "Academic Calendar", color: "#fb923c" },
+    { id: "map",           icon: "🗺️", label: "Campus Map",         color: "#34d399" },
+    { id: "billing",       icon: "💰", label: "Billing",            color: "#facc15" },
+    { id: "heatmap",       icon: "🌡️", label: "Heatmap",            color: "#f87171" },
+    { id: "loadbalancer",  icon: "⚖️", label: "Load Balancer",      color: "#22c55e" },
+    { id: "faults",        icon: "🔬", label: "Fault Detection",    color: "#a78bfa" },
+    { id: "sensorfaults",  icon: "📡", label: "Sensor Faults",      color: "#60a5fa" },
+    { id: "greenenergy",   icon: "🌱", label: "Green Energy",       color: "#22c55e" },
   ];
   const activeTiles = pinnedViews.length > 0
     ? QUICK_TILES.filter(t => pinnedViews.includes(t.id))
@@ -241,6 +257,11 @@ function Dashboard() {
     { id: "power",         icon: "⚡", label: "Power Monitor" },
     { id: "loadbalancer",  icon: "⚖️", label: "Load Balancer" },
     { id: "faults",        icon: "🔬", label: "Fault Detection" },
+    { id: "sensorfaults",  icon: "📡", label: "Sensor Faults" },
+    { id: "greenenergy",   icon: "🌱", label: "Green Energy" },
+    { id: "riskassess",    icon: "🛡️", label: "Risk Assessment" },
+    { id: "multidim",      icon: "📐", label: "Multi Analytics" },
+    { id: "calendar",      icon: "📅", label: "Academic Calendar" },
     { id: "compare",       icon: "📊", label: "Compare" },
     { id: "map",           icon: "🗺️", label: "Campus Map" },
     { id: "billing",       icon: "💰", label: "Billing" },
@@ -261,6 +282,11 @@ function Dashboard() {
     power:         "Power Monitor",
     loadbalancer:  "Smart Load Balancer",
     faults:        "Fault Detection System",
+    sensorfaults:  "Sensor Fault Detection",
+    greenenergy:   "Green Energy Optimization",
+    riskassess:    "Energy Risk Assessment",
+    multidim:      "Multi-Dimensional Analytics",
+    calendar:      "Academic Calendar",
     compare:       "Comparison Analytics",
     map:           "Campus Map",
     billing:       "Billing System",
@@ -271,21 +297,21 @@ function Dashboard() {
 
   // Theme tokens
   const T = {
-    shell: isDark ? "#0a0f1e" : "#f1f5f9",
-    sidebar: isDark ? "rgba(255,255,255,0.03)" : "#ffffff",
-    sidebarBorder: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.08)",
-    card: isDark ? "rgba(255,255,255,0.04)" : "#ffffff",
-    cardBorder: isDark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.08)",
-    textPrimary: isDark ? "#f1f5f9" : "#1e293b",
-    textSecondary: isDark ? "#64748b" : "#94a3b8",
-    navActive: isDark ? "rgba(56,189,248,0.1)" : "rgba(56,189,248,0.12)",
-    navActiveBorder: isDark ? "rgba(56,189,248,0.15)" : "rgba(56,189,248,0.2)",
-    navColor: isDark ? "#64748b" : "#94a3b8",
-    footerBg: isDark ? "rgba(255,255,255,0.03)" : "#f8fafc",
-    input: isDark ? "rgba(255,255,255,0.05)" : "#f8fafc",
-    inputBorder: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.1)",
-    modalBg: isDark ? "#0f172a" : "#ffffff",
-    overlay: isDark ? "rgba(0,0,0,0.7)" : "rgba(0,0,0,0.4)",
+    shell: isDark ? "#0a0f1e" : "#ecfdf5",
+    sidebar: isDark ? "rgba(255,255,255,0.03)" : "#d1fae5",
+    sidebarBorder: isDark ? "rgba(255,255,255,0.06)" : "rgba(6,95,70,0.15)",
+    card: isDark ? "rgba(255,255,255,0.04)" : "#d1fae5",
+    cardBorder: isDark ? "rgba(255,255,255,0.07)" : "rgba(6,95,70,0.15)",
+    textPrimary: isDark ? "#f1f5f9" : "#064e3b",
+    textSecondary: isDark ? "#64748b" : "#047857",
+    navActive: isDark ? "rgba(16,185,129,0.1)" : "rgba(16,185,129,0.15)",
+    navActiveBorder: isDark ? "rgba(16,185,129,0.2)" : "rgba(16,185,129,0.3)",
+    navColor: isDark ? "#64748b" : "#065f46",
+    footerBg: isDark ? "rgba(255,255,255,0.03)" : "#a7f3d0",
+    input: isDark ? "rgba(255,255,255,0.05)" : "#ecfdf5",
+    inputBorder: isDark ? "rgba(255,255,255,0.08)" : "rgba(6,95,70,0.2)",
+    modalBg: isDark ? "#0f172a" : "#ecfdf5",
+    overlay: isDark ? "rgba(0,0,0,0.7)" : "rgba(6,95,70,0.3)",
   };
 
   const inputStyle = {
@@ -308,7 +334,7 @@ function Dashboard() {
       }}>
         {/* Logo */}
         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "4px", padding: "0 6px" }}>
-          <div style={{ width: "36px", height: "36px", borderRadius: "11px", background: "linear-gradient(135deg,#38bdf8,#818cf8)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", boxShadow: "0 0 16px rgba(56,189,248,0.3)", flexShrink: 0 }}>⚡</div>
+          <div style={{ width: "36px", height: "36px", borderRadius: "11px", overflow: "hidden", flexShrink: 0, boxShadow: "0 0 16px rgba(16,185,129,0.35)" }}><img src="/logo.png" alt="SCEO" style={{ width: "36px", height: "36px", objectFit: "cover" }} /></div>
           <div>
             <div style={{ fontSize: "17px", fontWeight: "800", letterSpacing: "2px", color: T.textPrimary }}>SCEO</div>
             <div style={{ fontSize: "9px", color: T.textSecondary, letterSpacing: "0.5px" }}>Energy Optimizer</div>
@@ -317,7 +343,7 @@ function Dashboard() {
         {/* Animated gradient accent line */}
         <div style={{
           height: "2px", borderRadius: "2px", marginBottom: "20px", marginLeft: "6px", marginRight: "6px",
-          background: "linear-gradient(90deg,#38bdf8,#818cf8,#22c55e,#38bdf8)",
+          background: "linear-gradient(90deg,#10b981,#047857,#34d399,#10b981)",
           backgroundSize: "200% 200%",
           animation: "gradient-shift 4s ease infinite",
         }} />
@@ -335,11 +361,11 @@ function Dashboard() {
                   borderRadius: "9px",
                   border: isActive ? `1px solid ${T.navActiveBorder}` : "1px solid transparent",
                   background: isActive ? T.navActive : "transparent",
-                  color: isActive ? "#38bdf8" : T.navColor,
+                  color: isActive ? "#10b981" : T.navColor,
                   fontSize: "13px", fontWeight: isActive ? "600" : "500", cursor: "pointer",
                   textAlign: "left", transition: "all 0.15s", fontFamily: "Inter, sans-serif",
                   position: "relative",
-                  boxShadow: isActive ? "inset 3px 0 0 #38bdf8" : "none",
+                  boxShadow: isActive ? "inset 3px 0 0 #10b981" : "none",
                 }}
               >
                 <span style={{ fontSize: "15px", width: "18px", textAlign: "center" }}>{item.icon}</span>
@@ -359,7 +385,7 @@ function Dashboard() {
             onClick={() => setActiveView("profile")} title="My Profile">
             {profilePhoto
               ? <img src={profilePhoto} alt="avatar" style={{ width: "30px", height: "30px", borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
-              : <div style={{ width: "30px", height: "30px", borderRadius: "50%", background: "linear-gradient(135deg,#38bdf8,#818cf8)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: "700", flexShrink: 0, color: "#fff" }}>{(user.email || "U")[0].toUpperCase()}</div>
+              : <div style={{ width: "30px", height: "30px", borderRadius: "50%", background: "linear-gradient(135deg,#10b981,#047857)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: "700", flexShrink: 0, color: "#fff" }}>{(user.email || "U")[0].toUpperCase()}</div>
             }
             <div style={{ flex: 1, overflow: "hidden" }}>
               <div style={{ fontSize: "11px", fontWeight: "600", color: T.textPrimary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{user.name || user.email || "Admin"}</div>
@@ -402,15 +428,19 @@ function Dashboard() {
         {isOnline && syncing && (
           <div style={{ background: "rgba(56,189,248,0.1)", border: "1px solid rgba(56,189,248,0.3)", borderRadius: "12px", padding: "10px 18px", marginBottom: "16px", display: "flex", alignItems: "center", gap: "10px" }}>
             <span style={{ fontSize: "16px" }}>♻️</span>
-            <span style={{ fontSize: "13px", fontWeight: "700", color: "#38bdf8" }}>Syncing offline records…</span>
+            <span style={{ fontSize: "13px", fontWeight: "700", color: "#10b981" }}>Syncing offline records…</span>
           </div>
         )}
         {/* Header */}
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "24px" }}>
           <div>
             <h1 style={{ fontSize: "24px", fontWeight: "700", color: T.textPrimary, marginBottom: "4px" }}>{pageTitles[activeView]}</h1>
-            <p style={{ fontSize: "13px", color: T.textSecondary }}>
-              {new Date().toLocaleDateString("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+            <p style={{ fontSize: "13px", color: T.textSecondary, display: "flex", alignItems: "center", gap: "8px" }}>
+              {currentTime.toLocaleDateString("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+              <span style={{ color: isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)" }}>·</span>
+              <span style={{ fontVariantNumeric: "tabular-nums", color: T.textSecondary }}>
+                🕐 {currentTime.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true })}
+              </span>
             </p>
           </div>
           <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
@@ -432,7 +462,7 @@ function Dashboard() {
               onClick={() => setShowForm(true)}
               style={{
                 padding: "9px 18px", borderRadius: "10px", border: "none",
-                background: "linear-gradient(135deg,#38bdf8,#818cf8)", color: "#fff",
+                background: "linear-gradient(135deg,#10b981,#047857)", color: "#fff",
                 fontSize: "14px", fontWeight: "600", cursor: "pointer",
                 fontFamily: "Inter, sans-serif", boxShadow: "0 4px 16px rgba(56,189,248,0.3)",
               }}
@@ -441,9 +471,9 @@ function Dashboard() {
         </div>
 
         {/* Stat cards — only on data views */}
-        {["overview","buildings","records","monitor","predict","peak","scores","compare","map","billing","heatmap","power","alerts","loadbalancer","faults"].includes(activeView) && (
+        {["overview","buildings","records","monitor","predict","peak","scores","compare","map","billing","heatmap","power","alerts","loadbalancer","faults","sensorfaults","greenenergy"].includes(activeView) && (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "14px", marginBottom: "22px" }}>
-            <StatCard icon="⚡" label="Total Consumption" value={totalKwh} unit="kWh" color="#38bdf8" isDark={isDark} />
+            <StatCard icon="⚡" label="Total Consumption" value={totalKwh} unit="kWh" color="#10b981" isDark={isDark} />
             <StatCard icon="📈" label="Peak Usage" value={peakKwh} unit="kWh" color="#fb923c" isDark={isDark} />
             <StatCard icon="📉" label="Avg Per Record" value={avgKwh} unit="kWh" color="#34d399" isDark={isDark} />
             <StatCard icon="🏛️" label="Active Buildings" value={buildings} unit="" color="#a78bfa" isDark={isDark} />
@@ -478,11 +508,11 @@ function Dashboard() {
             <div style={{ background: T.card, border: `1px solid ${T.cardBorder}`, borderRadius: "20px", padding: "28px" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
                 <h2 style={{ fontSize: "16px", fontWeight: "700", color: T.textPrimary }}>Consumption Trend</h2>
-                <span style={{ background: "rgba(56,189,248,0.1)", color: "#38bdf8", border: "1px solid rgba(56,189,248,0.2)", borderRadius: "20px", padding: "4px 12px", fontSize: "12px", fontWeight: "600" }}>{data.length} data points</span>
+                <span style={{ background: "rgba(16,185,129,0.1)", color: "#10b981", border: "1px solid rgba(16,185,129,0.25)", borderRadius: "20px", padding: "4px 12px", fontSize: "12px", fontWeight: "600" }}>{data.length} data points</span>
               </div>
               {loading ? (
                 <div style={{ textAlign: "center", padding: "60px 0" }}>
-                  <div style={{ width: "36px", height: "36px", border: "3px solid rgba(56,189,248,0.1)", borderTop: "3px solid #38bdf8", borderRadius: "50%", animation: "spin 0.8s linear infinite", margin: "0 auto" }} />
+                  <div style={{ width: "36px", height: "36px", border: "3px solid rgba(16,185,129,0.15)", borderTop: "3px solid #10b981", borderRadius: "50%", animation: "spin 0.8s linear infinite", margin: "0 auto" }} />
                   <p style={{ color: T.textSecondary, marginTop: "12px" }}>Loading…</p>
                 </div>
               ) : data.length === 0 ? (
@@ -498,7 +528,7 @@ function Dashboard() {
           <div style={{ background: T.card, border: `1px solid ${T.cardBorder}`, borderRadius: "20px", padding: "28px" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
               <h2 style={{ fontSize: "16px", fontWeight: "700", color: T.textPrimary }}>Building Energy Breakdown</h2>
-              <span style={{ background: "rgba(56,189,248,0.1)", color: "#38bdf8", border: "1px solid rgba(56,189,248,0.2)", borderRadius: "20px", padding: "4px 12px", fontSize: "12px", fontWeight: "600" }}>{byBuilding.length} buildings</span>
+              <span style={{ background: "rgba(16,185,129,0.1)", color: "#10b981", border: "1px solid rgba(16,185,129,0.25)", borderRadius: "20px", padding: "4px 12px", fontSize: "12px", fontWeight: "600" }}>{byBuilding.length} buildings</span>
             </div>
             {byBuilding.length === 0
               ? <div style={{ textAlign: "center", padding: "60px 0" }}><span style={{ fontSize: "48px" }}>🏛️</span><p style={{ color: T.textSecondary, marginTop: "12px" }}>No building data yet.</p></div>
@@ -510,9 +540,9 @@ function Dashboard() {
                         <span style={{ fontSize: "11px", color: T.textSecondary, fontWeight: "700", width: "20px" }}>#{i+1}</span>
                         <span style={{ fontSize: "13px", color: T.textPrimary, fontWeight: "500", width: "140px", flexShrink: 0 }}>{b.name}</span>
                         <div style={{ flex: 1, height: "8px", background: isDark ? "rgba(255,255,255,0.06)" : "#e2e8f0", borderRadius: "4px", overflow: "hidden" }}>
-                          <div style={{ height: "100%", width: `${pct}%`, background: "linear-gradient(90deg,#38bdf8,#818cf8)", borderRadius: "4px", transition: "width 0.6s" }} />
+                          <div style={{ height: "100%", width: `${pct}%`, background: "linear-gradient(90deg,#10b981,#047857)", borderRadius: "4px", transition: "width 0.6s" }} />
                         </div>
-                        <span style={{ fontSize: "13px", color: "#38bdf8", fontWeight: "700", width: "80px", textAlign: "right" }}>{b.total} kWh</span>
+                        <span style={{ fontSize: "13px", color: "#10b981", fontWeight: "700", width: "80px", textAlign: "right" }}>{b.total} kWh</span>
                         <span style={{ fontSize: "12px", color: T.textSecondary, width: "40px" }}>{pct}%</span>
                       </div>
                     );
@@ -526,7 +556,7 @@ function Dashboard() {
           <div style={{ background: T.card, border: `1px solid ${T.cardBorder}`, borderRadius: "20px", padding: "28px" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
               <h2 style={{ fontSize: "16px", fontWeight: "700", color: T.textPrimary }}>All Energy Records</h2>
-              <span style={{ background: "rgba(56,189,248,0.1)", color: "#38bdf8", border: "1px solid rgba(56,189,248,0.2)", borderRadius: "20px", padding: "4px 12px", fontSize: "12px", fontWeight: "600" }}>{data.length} records</span>
+              <span style={{ background: "rgba(16,185,129,0.1)", color: "#10b981", border: "1px solid rgba(16,185,129,0.25)", borderRadius: "20px", padding: "4px 12px", fontSize: "12px", fontWeight: "600" }}>{data.length} records</span>
             </div>
             {data.length === 0
               ? <div style={{ textAlign: "center", padding: "60px 0" }}><span style={{ fontSize: "48px" }}>📋</span><p style={{ color: T.textSecondary, marginTop: "12px" }}>No records.</p></div>
@@ -545,7 +575,7 @@ function Dashboard() {
                             {row.usageDate ? new Date(row.usageDate).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) : "—"}
                           </td>
                           <td style={{ padding: "12px 16px", fontSize: "14px", color: isDark ? "#cbd5e1" : "#334155", borderBottom: `1px solid ${T.cardBorder}` }}>{row.building || "—"}</td>
-                          <td style={{ padding: "12px 16px", fontSize: "14px", color: "#38bdf8", fontWeight: "600", borderBottom: `1px solid ${T.cardBorder}` }}>{row.consumption}</td>
+                          <td style={{ padding: "12px 16px", fontSize: "14px", color: "#10b981", fontWeight: "600", borderBottom: `1px solid ${T.cardBorder}` }}>{row.consumption}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -563,6 +593,11 @@ function Dashboard() {
         {activeView === "power"        && <PowerMonitor data={data} isDark={isDark} />}
         {activeView === "loadbalancer" && <LoadBalancer isDark={isDark} />}
         {activeView === "faults"       && <FaultDetection isDark={isDark} />}
+        {activeView === "sensorfaults"  && <SensorFaultDetection isDark={isDark} />}
+        {activeView === "greenenergy"   && <GreenEnergyMode isDark={isDark} />}
+        {activeView === "riskassess"    && <EnergyRiskAssessment data={data} isDark={isDark} />}
+        {activeView === "multidim"      && <MultiDimensionalAnalytics data={data} isDark={isDark} />}
+        {activeView === "calendar"      && <AcademicCalendar isDark={isDark} />}
         {activeView === "compare"      && <CompareAnalytics data={data} isDark={isDark} />}
         {activeView === "map"          && <CampusMap data={data} isDark={isDark} />}
         {activeView === "billing"      && <Billing data={data} isDark={isDark} />}
@@ -575,13 +610,13 @@ function Dashboard() {
             <div style={{ background: T.card, border: `1px solid ${T.cardBorder}`, borderRadius: "20px", padding: "28px" }}>
               <h2 style={{ fontSize: "16px", fontWeight: "700", color: T.textPrimary, marginBottom: "20px" }}>Profile Photo</h2>
               <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-                <div style={{ width: "76px", height: "76px", borderRadius: "50%", flexShrink: 0, background: "linear-gradient(135deg,#38bdf8,#818cf8)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 24px rgba(56,189,248,0.25)", overflow: "hidden" }}>
+                <div style={{ width: "76px", height: "76px", borderRadius: "50%", flexShrink: 0, background: "linear-gradient(135deg,#10b981,#047857)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 24px rgba(16,185,129,0.3)", overflow: "hidden" }}>
                   {profilePhoto ? <img src={profilePhoto} alt="profile" style={{ width: "76px", height: "76px", objectFit: "cover" }} />
                     : <span style={{ fontSize: "28px", fontWeight: "700", color: "#fff" }}>{(user.email || "U")[0].toUpperCase()}</span>}
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                   <p style={{ color: T.textSecondary, fontSize: "13px", margin: 0 }}>Upload JPG or PNG</p>
-                  <label style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "8px 16px", borderRadius: "8px", cursor: "pointer", border: "1px solid rgba(56,189,248,0.3)", background: "rgba(56,189,248,0.1)", color: "#38bdf8", fontSize: "13px", fontWeight: "600" }}>
+                  <label style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "8px 16px", borderRadius: "8px", cursor: "pointer", border: "1px solid rgba(16,185,129,0.3)", background: "rgba(16,185,129,0.1)", color: "#10b981", fontSize: "13px", fontWeight: "600" }}>
                     📁 Choose Photo
                     <input type="file" accept="image/*" onChange={handlePhotoChange} style={{ display: "none" }} />
                   </label>
@@ -607,13 +642,13 @@ function Dashboard() {
                   {phoneEdit ? (
                     <div style={{ display: "flex", gap: "8px" }}>
                       <input type="tel" value={phoneInput} onChange={e => setPhoneInput(e.target.value)} placeholder="+91 98765 43210" style={{ ...inputStyle, flex: 1 }} />
-                      <button onClick={handleSavePhone} style={{ padding: "8px 16px", borderRadius: "8px", border: "none", background: "linear-gradient(135deg,#38bdf8,#818cf8)", color: "#fff", fontSize: "13px", fontWeight: "700", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>Save</button>
+                      <button onClick={handleSavePhone} style={{ padding: "8px 16px", borderRadius: "8px", border: "none", background: "linear-gradient(135deg,#10b981,#047857)", color: "#fff", fontSize: "13px", fontWeight: "700", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>Save</button>
                       <button onClick={() => { setPhoneEdit(false); setPhoneInput(""); }} style={{ padding: "8px 14px", borderRadius: "8px", border: `1px solid ${T.inputBorder}`, background: "transparent", color: T.textSecondary, fontSize: "13px", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>Cancel</button>
                     </div>
                   ) : (
                     <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                       <div style={{ flex: 1, padding: "11px 14px", borderRadius: "10px", border: `1px solid ${T.inputBorder}`, background: isDark ? "rgba(255,255,255,0.03)" : "#f8fafc", color: T.textSecondary, fontSize: "14px" }}>{phone || "Not set"}</div>
-                      <button onClick={() => { setPhoneEdit(true); setPhoneInput(phone); }} style={{ padding: "8px 14px", borderRadius: "8px", border: "1px solid rgba(56,189,248,0.3)", background: "rgba(56,189,248,0.08)", color: "#38bdf8", fontSize: "12px", fontWeight: "600", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>✏️ Edit</button>
+                      <button onClick={() => { setPhoneEdit(true); setPhoneInput(phone); }} style={{ padding: "8px 14px", borderRadius: "8px", border: "1px solid rgba(16,185,129,0.3)", background: "rgba(16,185,129,0.08)", color: "#10b981", fontSize: "12px", fontWeight: "600", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>✏️ Edit</button>
                     </div>
                   )}
                 </div>
@@ -632,7 +667,7 @@ function Dashboard() {
                   </div>
                 ))}
                 {pwMsg && <div style={{ padding: "10px 14px", borderRadius: "10px", fontSize: "13px", fontWeight: "600", background: pwMsg.type === "error" ? "rgba(248,113,113,0.1)" : "rgba(52,211,153,0.1)", color: pwMsg.type === "error" ? "#f87171" : "#34d399", border: `1px solid ${pwMsg.type === "error" ? "rgba(248,113,113,0.3)" : "rgba(52,211,153,0.3)"}` }}>{pwMsg.type === "error" ? "⚠️" : "✅"} {pwMsg.text}</div>}
-                <button onClick={handleChangePassword} style={{ padding: "12px 28px", borderRadius: "10px", border: "none", background: "linear-gradient(135deg,#38bdf8,#818cf8)", color: "#fff", fontSize: "14px", fontWeight: "700", cursor: "pointer", fontFamily: "Inter, sans-serif", alignSelf: "flex-start" }}>🔑 Update Password</button>
+                <button onClick={handleChangePassword} style={{ padding: "12px 28px", borderRadius: "10px", border: "none", background: "linear-gradient(135deg,#10b981,#047857)", color: "#fff", fontSize: "14px", fontWeight: "700", cursor: "pointer", fontFamily: "Inter, sans-serif", alignSelf: "flex-start" }}>🔑 Update Password</button>
               </div>
             </div>
 
@@ -671,7 +706,7 @@ function Dashboard() {
             </div>
             <div style={{ display: "flex", gap: "12px", marginTop: "24px" }}>
               <button onClick={() => setShowForm(false)} style={{ flex: 1, padding: "12px", borderRadius: "10px", border: `1px solid ${T.inputBorder}`, background: "transparent", color: T.textSecondary, fontSize: "14px", fontWeight: "600", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>Cancel</button>
-              <button onClick={handleSubmit} disabled={submitting} style={{ flex: 1, padding: "12px", borderRadius: "10px", border: "none", background: "linear-gradient(135deg,#38bdf8,#818cf8)", color: "#fff", fontSize: "14px", fontWeight: "700", cursor: "pointer", fontFamily: "Inter, sans-serif", boxShadow: "0 4px 16px rgba(56,189,248,0.3)" }}>
+              <button onClick={handleSubmit} disabled={submitting} style={{ flex: 1, padding: "12px", borderRadius: "10px", border: "none", background: "linear-gradient(135deg,#10b981,#047857)", color: "#fff", fontSize: "14px", fontWeight: "700", cursor: "pointer", fontFamily: "Inter, sans-serif", boxShadow: "0 4px 16px rgba(16,185,129,0.3)" }}>
                 {submitting ? "Saving…" : "Save Record"}
               </button>
             </div>

@@ -171,7 +171,7 @@ function Login() {
       <div style={styles.card}>
         {/* Logo */}
         <div style={styles.iconWrap}>
-          <span style={styles.icon}>⚡</span>
+          <img src="/logo.png" alt="SCEO Logo" style={{ width: "54px", height: "54px", objectFit: "contain", borderRadius: "12px" }} />
         </div>
         <h1 style={styles.title}>SCEO</h1>
         <p style={styles.subtitle}>Smart Campus Energy Optimizer</p>
@@ -228,7 +228,7 @@ function Login() {
                 type="checkbox"
                 checked={rememberMe}
                 onChange={e => setRememberMe(e.target.checked)}
-                style={{ accentColor: "#38bdf8", width: "15px", height: "15px", cursor: "pointer" }}
+                style={{ accentColor: "#10b981", width: "15px", height: "15px", cursor: "pointer" }}
               />
               <span style={{ fontSize: "13px", color: "#94a3b8", cursor: "pointer" }}>Remember me</span>
             </label>
@@ -278,7 +278,7 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "radial-gradient(ellipse at 30% 20%, #0f2040 0%, #0a0f1e 60%)",
+    background: "radial-gradient(ellipse at 30% 20%, #052e16 0%, #022c22 60%)",
     position: "relative",
     overflow: "hidden",
   },
@@ -287,7 +287,7 @@ const styles = {
     width: "500px",
     height: "500px",
     borderRadius: "50%",
-    background: "radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%)",
+    background: "radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%)",
     top: "-100px",
     left: "-100px",
     pointerEvents: "none",
@@ -297,7 +297,7 @@ const styles = {
     width: "400px",
     height: "400px",
     borderRadius: "50%",
-    background: "radial-gradient(circle, rgba(167,139,250,0.1) 0%, transparent 70%)",
+    background: "radial-gradient(circle, rgba(4,120,87,0.12) 0%, transparent 70%)",
     bottom: "-80px",
     right: "-60px",
     pointerEvents: "none",
@@ -310,22 +310,23 @@ const styles = {
     padding: "48px 40px",
     width: "100%",
     maxWidth: "440px",
-    boxShadow: "0 8px 40px rgba(0,0,0,0.5), 0 0 80px rgba(56,189,248,0.08)",
+    boxShadow: "0 8px 40px rgba(0,0,0,0.5), 0 0 80px rgba(16,185,129,0.1)",
     animation: "fadeIn 0.6s ease",
     position: "relative",
     zIndex: 1,
   },
   iconWrap: {
-    width: "60px",
-    height: "60px",
-    borderRadius: "18px",
-    background: "linear-gradient(135deg, #38bdf8, #818cf8)",
+    width: "80px",
+    height: "80px",
+    borderRadius: "20px",
+    background: "rgba(255,255,255,0.9)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     margin: "0 auto 20px",
-    boxShadow: "0 0 30px rgba(56,189,248,0.4)",
+    boxShadow: "0 0 30px rgba(16,185,129,0.4)",
     animation: "float 3s ease-in-out infinite",
+    overflow: "hidden",
   },
   icon: { fontSize: "28px" },
   title: {
@@ -333,7 +334,7 @@ const styles = {
     fontSize: "32px",
     fontWeight: "800",
     letterSpacing: "4px",
-    background: "linear-gradient(90deg, #38bdf8, #818cf8)",
+    background: "linear-gradient(90deg, #10b981, #047857)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
     marginBottom: "6px",
@@ -369,9 +370,9 @@ const styles = {
     letterSpacing: "0.3px",
   },
   tabActive: {
-    background: "linear-gradient(135deg, #38bdf8, #818cf8)",
+    background: "linear-gradient(135deg, #10b981, #047857)",
     color: "#fff",
-    boxShadow: "0 2px 12px rgba(56,189,248,0.35)",
+    boxShadow: "0 2px 12px rgba(16,185,129,0.4)",
   },
   form: { display: "flex", flexDirection: "column", gap: "16px" },
   field: { display: "flex", flexDirection: "column", gap: "6px" },
@@ -402,14 +403,14 @@ const styles = {
   inputFocus: {
     padding: "12px 16px",
     borderRadius: "12px",
-    border: "1px solid rgba(56,189,248,0.5)",
-    background: "rgba(56,189,248,0.06)",
+    border: "1px solid rgba(16,185,129,0.5)",
+    background: "rgba(16,185,129,0.06)",
     color: "#f1f5f9",
     fontSize: "15px",
     outline: "none",
     transition: "all 0.2s",
     fontFamily: "Inter, sans-serif",
-    boxShadow: "0 0 0 3px rgba(56,189,248,0.1)",
+    boxShadow: "0 0 0 3px rgba(16,185,129,0.12)",
   },
   error: {
     fontSize: "13px",
@@ -432,7 +433,7 @@ const styles = {
     padding: "14px",
     borderRadius: "12px",
     border: "none",
-    background: "linear-gradient(135deg, #38bdf8, #818cf8)",
+    background: "linear-gradient(135deg, #10b981, #047857)",
     color: "#fff",
     fontSize: "15px",
     fontWeight: "700",
@@ -440,14 +441,14 @@ const styles = {
     letterSpacing: "0.5px",
     transition: "all 0.2s",
     fontFamily: "Inter, sans-serif",
-    boxShadow: "0 4px 20px rgba(56,189,248,0.3)",
+    boxShadow: "0 4px 20px rgba(16,185,129,0.35)",
   },
   buttonHover: {
     marginTop: "8px",
     padding: "14px",
     borderRadius: "12px",
     border: "none",
-    background: "linear-gradient(135deg, #0ea5e9, #7c3aed)",
+    background: "linear-gradient(135deg, #059669, #065f46)",
     color: "#fff",
     fontSize: "15px",
     fontWeight: "700",
@@ -455,7 +456,7 @@ const styles = {
     letterSpacing: "0.5px",
     transition: "all 0.2s",
     fontFamily: "Inter, sans-serif",
-    boxShadow: "0 8px 30px rgba(56,189,248,0.5)",
+    boxShadow: "0 8px 30px rgba(16,185,129,0.5)",
     transform: "translateY(-1px)",
   },
   buttonDisabled: {
@@ -478,7 +479,7 @@ const styles = {
     color: "#64748b",
   },
   switchLink: {
-    color: "#38bdf8",
+    color: "#10b981",
     cursor: "pointer",
     fontWeight: "600",
     textDecoration: "underline",

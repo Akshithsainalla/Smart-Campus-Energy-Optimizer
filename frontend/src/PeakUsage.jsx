@@ -130,7 +130,7 @@ function PeakUsage({ data, isDark }) {
                   <span style={{ fontSize: "11px", fontWeight: "700", color: t.sub, width: "18px" }}>#{i+1}</span>
                   <span style={{ fontSize: "13px", color: t.text }}>{d.date}</span>
                 </div>
-                <span style={{ fontSize: "13px", fontWeight: "700", color: i === 0 ? "#f87171" : "#38bdf8" }}>{d.kwh} kWh</span>
+                <span style={{ fontSize: "13px", fontWeight: "700", color: i === 0 ? "#f87171" : "#10b981" }}>{d.kwh} kWh</span>
               </div>
             ))}
         </div>

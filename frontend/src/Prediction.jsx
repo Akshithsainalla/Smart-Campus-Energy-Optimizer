@@ -74,7 +74,7 @@ function Prediction({ data, isDark }) {
       {
         label: "Actual (kWh)",
         data: realFull,
-        borderColor: "#38bdf8",
+        borderColor: "#10b981",
         backgroundColor: "rgba(56,189,248,0.08)",
         tension: 0.4, fill: true, pointRadius: 4,
         borderWidth: 2,
@@ -131,7 +131,7 @@ function Prediction({ data, isDark }) {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "16px" }}>
         {[
           { label: "Tomorrow's Prediction", value: `${forecast[0]?.value} kWh`, color: "#a78bfa", icon: "🔮" },
-          { label: "7-Day Total (Predicted)", value: `${forecast.reduce((a, f) => a + f.value, 0).toFixed(0)} kWh`, color: "#38bdf8", icon: "📅" },
+          { label: "7-Day Total (Predicted)", value: `${forecast.reduce((a, f) => a + f.value, 0).toFixed(0)} kWh`, color: "#10b981", icon: "📅" },
           { label: "7-Day Avg (Predicted)", value: `${(forecast.reduce((a, f) => a + f.value, 0) / 7).toFixed(1)} kWh/day`, color: "#34d399", icon: "📉" },
         ].map(s => (
           <div key={s.label} style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: "16px", padding: "20px" }}>
