@@ -15,3 +15,13 @@ services:
         value: https://smart-campus-energy-optimizer.vercel.app
       - key: JAVA_VERSION
         value: "17"
+      - key: DB_HOST
+        value: mysql-3a0f65a1-akshithsai2425-169f.h.aivencloud.com
+      - key: DB_PORT
+        value: "28500"
+      - key: DB_NAME
+        value: defaultdb
+      - key: DB_USER
+        value: avnadmin
+      - key: DB_PASSWORD
+        sync: false   # Set this secret in the Render dashboard — do NOT hardcode it here
