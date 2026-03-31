@@ -1,8 +1,9 @@
 # Database files (locked at runtime)
 backend/data/
 
-# Frontend local env (contains dev API URL — do not commit)
+# Local env files (contain secrets / dev URLs — do not commit)
 frontend/.env
+backend/.env
 
 # Frontend build artifacts
 frontend/node_modules/
