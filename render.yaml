@@ -1,0 +1,37 @@
+services:
+  # ── Backend: Spring Boot REST API ──────────────────────────────────────────
+  - type: web
+    name: sceo-backend
+    runtime: java
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: ./mvnw package -DskipTests
+    startCommand: java -jar target/backend-0.0.1-SNAPSHOT.jar
+    healthCheckPath: /api/energy
+    envVars:
+      - key: CORS_ALLOWED_ORIGIN
+        # Set this to your frontend Render URL after deploying the frontend
+        # e.g. https://sceo-frontend.onrender.com
+        value: https://sceo-frontend.onrender.com
+      - key: JAVA_VERSION
+        value: "17"
+
+  # ── Frontend: React/Vite Static Site ───────────────────────────────────────
+  - type: web
+    name: sceo-frontend
+    runtime: static
+    region: oregon
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        # Set this to your backend Render URL after deploying the backend
+        # e.g. https://sceo-backend.onrender.com
+        value: https://sceo-backend.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

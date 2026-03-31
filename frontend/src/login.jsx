@@ -70,7 +70,7 @@ function Login() {
 
     // 1️⃣ Try backend
     try {
-      const res = await axios.post("http://localhost:8080/api/auth/login", { email, password });
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, { email, password });
       localStorage.setItem("user", JSON.stringify(res.data));
       navigate("/dashboard");
       return;
@@ -111,7 +111,7 @@ function Login() {
 
     // 1️⃣ Try backend
     try {
-      await axios.post("http://localhost:8080/api/auth/register", { name, email, password, role: "USER" });
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, { name, email, password, role: "USER" });
       setSuccess("Account created! You can now sign in.");
       setMode("signin");
       setEmail(email);

@@ -117,7 +117,7 @@ function Dashboard() {
       setSyncing(true);
       Promise.all(
         offlineQueue.map(item =>
-          axios.post("http://localhost:8080/api/energy", item).catch(() => null)
+          axios.post(`${import.meta.env.VITE_API_URL}/api/energy`, item).catch(() => null)
         )
       ).then(() => {
         setOfflineQueue([]);
@@ -164,7 +164,7 @@ function Dashboard() {
 
   const fetchData = () => {
     setLoading(true);
-    axios.get("http://localhost:8080/api/energy")
+    axios.get(`${import.meta.env.VITE_API_URL}/api/energy`)
       .then(res => setData(res.data))
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -223,7 +223,7 @@ function Dashboard() {
       return;
     }
     try {
-      await axios.post("http://localhost:8080/api/energy", record);
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/energy`, record);
       showToast("Energy record added!");
       setForm({ building: BUILDINGS[0], consumption: "", usageDate: "" });
       setShowForm(false); fetchData();
